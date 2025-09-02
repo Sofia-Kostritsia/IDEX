@@ -1,4 +1,10 @@
 M556 S1 X0 Y0 Z0
+;M92 X80.1264 U80.1264 Y80.0769
+;M92 X80.0507 U80.0507 Y80.0163
+;M92 X80.0206 U80.0206 Y80.0000
+
+;M92 X79.9493 U79.9493 Y79.9322
+M92 X79.9480 U79.9480 Y79.9412
 
 if !exists(param.A)
     if !exists(param.S)
@@ -399,7 +405,7 @@ if !exists(param.A)
     var Hy = var.RR[1] - var.LR[1]
     var Vx = var.RF[0] - var.RR[0]
     var Vy = var.RF[1] - var.RR[1]
-    
+
     var k = var.Vx / var.Vy
     echo "Vx = "^{var.Vx}^", Vy = "^{var.Vy}^", k = "^{var.k}
 
@@ -414,15 +420,15 @@ if !exists(param.A)
     ;var CorrLength = 2 * var.CrossBarLength * sin(radians(abs(var.alpha_deg) / 2)) * cos(radians(abs(var.alpha_deg) / 2))
     
     var mag = var.CorrLength/2
-    if var.mag >1.2
-      set var.mag = 1.2
+    ;if var.mag >1.2
+    ;  set var.mag = 1.2
     
     ; pick sign safely (no ternary)
     var s = 1                                           ; +1 by default
     if var.alpha_deg >= 0
       set var.s = 0 - 1                                 ; -1 if alpha>=0
 
-    var CorrLengthSafety = var.mag * var.s
+    var CorrLengthSafety = var.mag * var.s *0.36
 
     ; ===== M556 coefficient(s) from measured angle =====
     ; Sign from slope of right edge (RR->RF):
@@ -474,8 +480,8 @@ if !exists(param.A)
     echo >>"0:/macros/XY Auto Squaring/xy_square_offset.g" "else"
     echo >>"0:/macros/XY Auto Squaring/xy_square_offset.g" "  global xy_square_offset = " ^ global.xy_square_offset
 
-    if var.Iter == 0
-      M98 P"0:/macros/XY Auto Squaring/XY Auto Squaring" I{1}
+    ;if var.Iter == 0
+    ;  M98 P"0:/macros/XY Auto Squaring/XY Auto Squaring" I{1}
     
     
 
